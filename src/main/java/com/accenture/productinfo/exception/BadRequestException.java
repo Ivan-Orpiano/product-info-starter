@@ -3,8 +3,10 @@ package com.accenture.productinfo.exception;
 import java.util.Map;
 
 /**
- * The BadRequestException class is a custom exception in Java that extends the RuntimeException class.
- * It is used to represent a specific type of error in a Spring Boot application.
+ * The BadRequestException class is a custom exception in Java that
+ * extends the RuntimeException class.
+ * It is used to represent a specific type of error in a Spring Boot
+ * application.
  */
 
 public class BadRequestException extends RuntimeException {
