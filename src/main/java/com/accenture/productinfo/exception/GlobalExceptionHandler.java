@@ -5,30 +5,47 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.io.UncheckedIOException;
+import java.util.Collections;
 
 /**
- * The GlobalExceptionHandler class is a Spring Boot component that provides centralized exception handling
- * across the entire application. It is annotated with @RestControllerAdvice, which makes it a specialized
- * version of @ControllerAdvice that is specifically designed to handle exceptions in RESTful web services.
- *
- * Within this class, there is a method handleBadRequestException that is annotated with
- * @ExceptionHandler(BadRequestException.class). This annotation indicates that this method will handle
- * exceptions of type BadRequestException.
+ * Central exception handler.
+ * Ensures that API errors have consistent JSON responses.
  */
-
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    // Handles invalid product codes as HTTP 400.
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<ApiErrorResponse> handleBadRequestException(
-            Exception exception
-    ) {
-        BadRequestException raisedException = (BadRequestException) exception;
-        ApiErrorResponse errorResponse = new ApiErrorResponse(
-                raisedException.getErrorId(),
-                raisedException.getErrorMessage(),
-                raisedException.getErrorDetails()
+            BadRequestException exception) {
+
+        ApiErrorResponse response = new ApiErrorResponse(
+                exception.getErrorId(),
+                exception.getErrorMessage(),
+                exception.getErrorDetails()
         );
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>(
+                response,
+                HttpStatus.BAD_REQUEST
+        );
+    }
+
+    // Handles unreadable or malformed JSON as HTTP 500.
+    @ExceptionHandler(UncheckedIOException.class)
+    public ResponseEntity<ApiErrorResponse> handleFileReadException(
+            UncheckedIOException exception) {
+
+        ApiErrorResponse response = new ApiErrorResponse(
+                500,
+                "Unable to read JSON file.",
+                Collections.emptyMap()
+        );
+
+        return new ResponseEntity<>(
+                response,
+                HttpStatus.INTERNAL_SERVER_ERROR
+        );
     }
 }
