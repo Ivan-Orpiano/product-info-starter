@@ -38,11 +38,10 @@ public class GlobalExceptionHandler {
             UncheckedIOException exception) {
 
         ApiErrorResponse response = new ApiErrorResponse(
-                500,
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 "Unable to read JSON file.",
                 Collections.emptyMap()
         );
-
         return new ResponseEntity<>(
                 response,
                 HttpStatus.INTERNAL_SERVER_ERROR

@@ -72,7 +72,8 @@ public class ProductServiceImpl implements ProductService {
      * Reads the 'product.json' file from the application resources
      * and parses its contents into a Map of key-value pairs.
      *
-     * @return A Map containing the product data, or an empty map if reading fails.
+     * @return A Map containing the product data, or an empty map if
+     *         reading fails.
      */
     private Map<String, String> readFile() {
 
