@@ -3,7 +3,8 @@ package com.accenture.productinfo.exception;
 import java.util.Map;
 
 /**
- *The ApiErrorResponse class is a Java class designed to encapsulate error information in a structured format.
+ * The ApiErrorResponse class is a Java class designed to encapsulate
+ * error information in a structured format.
  * It is used to represent error responses in a Spring Boot application.
  */
 public class ApiErrorResponse {
